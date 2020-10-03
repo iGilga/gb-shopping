@@ -8,7 +8,7 @@ class CartItem {
   }
 
   addCount(count = 1) {
-
+    this.count += count;
   }
 
   getAmount() {
