@@ -1,20 +1,13 @@
+import axios from 'axios';
+
 class GoodService {
   constructor() {
-
+    this.api = axios;
+    this.baseUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
   }
 
   fetchGoods() {
-    const data = [
-      { id: 1, title: 'Shirt', price: 150 },
-      { id: 2, title: 'Socks', price: 50 },
-      { id: 3, title: 'Jacket', price: 350 },
-      { id: 4, title: 'Shoes', price: 250 },
-      { id: 5, title: 'Shoes', price: 300 },
-      { id: 6, title: 'Shoes', price: 75 },
-      { id: 7, title: 'Shoes', price: 275 },
-      { id: 8, title: 'Shoes', price: 400 },
-    ];
-    const promise = Promise.resolve(data);
+    const promise = this.api.get(`${this.baseUrl}/catalogData.json`);
     return promise;
   }
 }
