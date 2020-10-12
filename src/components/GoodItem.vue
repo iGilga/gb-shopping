@@ -2,7 +2,7 @@
   <b-col class="good-item">
     <div class="good-item-wrp">
       <b-img src="@/assets/img/300.jpeg" fluid alt="good" width="300"></b-img>
-      <h5 class="good-title">{{ good.title }}</h5>
+      <h5 class="good-title">{{ good.product_name }}</h5>
       <span class="good-price">{{ good.price }}</span>
       <b-button class="btn-add" variant="primary">Добавить</b-button>
     </div>
