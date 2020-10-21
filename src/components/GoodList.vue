@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex';
 import GoodService from '@/services/goodService';
 import GoodItem from './GoodItem.vue';
 
@@ -17,11 +18,13 @@ export default {
   },
   data() {
     return {
-      goods: [],
     };
   },
+  computed: mapGetters({
+    goods: 'goods/GoodsByText',
+  }),
   mounted() {
-    this.getGoods();
+    this.$store.dispatch('goods/getAllGoods');
   },
   methods: {
     async getGoods() {

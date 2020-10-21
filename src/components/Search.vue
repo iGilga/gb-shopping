@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     onText(value) {
-      console.log(value);
+      this.$store.dispatch('goods/filter', { text: value });
     },
   },
 };
