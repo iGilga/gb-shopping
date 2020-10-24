@@ -4,14 +4,24 @@
       <b-img src="@/assets/img/300.jpeg" fluid alt="good" width="300"></b-img>
       <h5 class="good-title">{{ good.product_name }}</h5>
       <span class="good-price">{{ good.price }}</span>
-      <b-button class="btn-add" variant="primary">Добавить</b-button>
+      <b-button
+        class="btn-add"
+        variant="primary"
+        @click="addGoodToCart(good)">
+        Добавить
+      </b-button>
     </div>
   </b-col>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   props: ['good'],
+  methods: mapActions('cart', [
+    'addGoodToCart',
+  ]),
 };
 </script>
 

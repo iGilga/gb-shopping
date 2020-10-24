@@ -6,7 +6,7 @@
         <Search/>
       </div>
       <div>
-        <b-button>Cart</b-button>
+        <Cart/>
       </div>
     </b-navbar-nav>
   </b-navbar>
@@ -14,11 +14,13 @@
 
 <script>
 import Search from './Search.vue';
+import Cart from './Cart.vue';
 
 export default {
   name: 'Menu',
   components: {
     Search,
+    Cart,
   },
 };
 </script>
