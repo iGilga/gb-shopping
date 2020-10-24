@@ -42,6 +42,9 @@ export default {
       return this.goods.length;
     },
   },
+  mounted() {
+    this.$store.dispatch('cart/getCart');
+  },
 };
 </script>
 

@@ -1,6 +1,7 @@
 <template lang="html">
   <div class="catalog">
     <b-row>
+      <!-- <div id="notfound" v-if="!goods.lenght">Нет данных</div> -->
       <GoodItem v-for="good in goods" :key="good.key" :good="good" />
     </b-row>
   </div>
@@ -38,4 +39,7 @@ export default {
 <style lang="stylus" scoped>
 .catalog
   margin .4em 0 0 0
+#notfound
+  width 100%
+  text-align center
 </style>

@@ -1,16 +1,21 @@
 import axios from 'axios';
 
-class GoodService {
+class CartService {
   constructor() {
     this.api = axios;
     // this.baseUrl = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
     this.baseUrl = 'http://localhost:3000';
   }
 
-  fetchGoods() {
-    const promise = this.api.get(`${this.baseUrl}/catalogData`);
+  fetchCart() {
+    const promise = this.api.get(`${this.baseUrl}/cart`);
+    return promise;
+  }
+
+  addCart(cart) {
+    const promise = this.api.post(`${this.baseUrl}/addToCart`, cart);
     return promise;
   }
 }
 
-export default new GoodService();
+export default new CartService();

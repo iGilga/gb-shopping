@@ -1,3 +1,6 @@
+import CartService from '@/services/cartService';
+
+export const setCart = 'setCart';
 export const addCart = 'addCart';
 export const incrementItemQuantity = 'incrementItemQuantity';
 export const descrementItemQuantity = 'descrementItemQuantity';
@@ -9,16 +12,20 @@ const state = {
 
 const getters = {
   // Getters to access cart values
-  cartGoods: (state, getters, rootState) => {
-    return state.items.map(({ id, quantity }) => {
-      const good = rootState.goods.all.find((g) => g.id_product === id);
-      return {
-        id: good.id_product,
-        title: good.product_name,
-        price: good.price,
-        quantity,
-      };
-    });
+  cartGoods: (state, getters, { goods: { all } }) => {
+    if (all.length > 0) {
+      return state.items.map(({ id, quantity }) => {
+        const good = all.find((g) => g.id_product === id);
+        return {
+          id: good.id_product,
+          title: good.product_name,
+          price: good.price,
+          quantity,
+        };
+      });
+    } else {
+      return [];
+    }
   },
   cartTotalPrice: (state, getters) => {
     return getters.cartGoods.reduce((total, good) => {
@@ -28,21 +35,34 @@ const getters = {
 };
 
 const actions = {
-  // Asynchronous mutations commits to modify cart
+  getCart({ commit }) {
+    CartService.fetchCart().then(({ data }) => {
+      commit(setCart, data);
+    });
+  },
   addGoodToCart({
     commit,
     state
   }, good) {
     const cartItem = state.items.find((item) => item.id === good.id_product);
     if (!cartItem) {
-      commit('addCart', { id: good.id_product });
+      const newCart = {
+        id: good.id_product,
+        quantity: 1,
+      };
+      commit('addCart', newCart);
+      CartService.addCart(newCart).then((responses) => {
+        console.log(responses);
+      });
     } else {
       commit('incrementItemQuantity', cartItem);
+      CartService.addCart(cartItem).then((responses) => {
+        console.log(responses);
+      });
     }
   },
   removeCart({ commit, state }, good) {
     const cartItem = state.items.find((g) => g.id === good.id);
-    console.log(cartItem);
     if (cartItem.quantity > 1) {
       console.log('desc');
       commit('descrementItemQuantity', cartItem);
@@ -53,12 +73,11 @@ const actions = {
 };
 
 const mutations = {
-  // Synchronous modifications of cart
-  [addCart] (state, { id }) {
-    state.items.push({
-      id,
-      quantity: 1,
-    });
+  [setCart] (state, cart) {
+    state.items = cart;
+  },
+  [addCart] (state, cart) {
+    state.items.push(cart);
   },
   [incrementItemQuantity] (state, { id }) {
     const cartItem = state.items.find((item) => item.id === id);
